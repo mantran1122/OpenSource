@@ -13,25 +13,41 @@ if ! command -v python3 &> /dev/null; then
     exit 1
 fi
 
-# 2. Setup Virtual Environment
+# 2. Make run script executable
+chmod +x run.py
+
+# 3. Setup Virtual Environment
 if [ ! -d ".venv" ]; then
     echo "Creating virtual environment in .venv..."
     python3 -m venv .venv
 fi
 
-# 3. Install Requirements
+# 4. Install Requirements
 echo "Installing dependencies..."
 source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# 4. Desktop Shortcut Integration
+# 5. Ensure Qt6 XCB Cursor Compatibility (for Ubuntu 24.04+ / Zorin OS 17+)
+if ! ldconfig -p 2>/dev/null | grep -q "libxcb-cursor.so.0"; then
+    if [ ! -f "lintask/lib/libxcb-cursor.so.0" ]; then
+        echo "Ensuring Qt6 X11 cursor compatibility..."
+        if command -v apt-get &> /dev/null && [ "$(id -u)" -eq 0 ]; then
+            apt-get install -y -q libxcb-cursor0 2>/dev/null || true
+        elif command -v pkexec &> /dev/null; then
+            pkexec apt-get install -y -q libxcb-cursor0 2>/dev/null || true
+        fi
+    fi
+fi
+
+# 6. Desktop and Taskbar Integration
 echo ""
-echo "Registering LinTask Manager to your Linux Application Menu..."
+echo "Registering LinTask Manager to your Linux Application Menu & Taskbar..."
 python3 -c "from lintask.utils.desktop_integration import install_shortcut; success, msg = install_shortcut(); print('-> ' + msg)"
 
 echo ""
 echo "=== Setup Complete! ==="
-echo "You can now launch LinTask Manager from your application menu, or run:"
-echo "    python3 run.py"
-
+echo "You can now launch LinTask Manager by:"
+echo " 1. Clicking 'Theo dõi hệ thống' or 'LinTask Manager' on your taskbar right-click menu"
+echo " 2. Clicking the LinTask Manager icon pinned on your taskbar"
+echo " 3. Running: python3 run.py"
