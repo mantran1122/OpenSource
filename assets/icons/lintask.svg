@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0078d4"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="pulseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Base Rounded Container -->
+  <rect x="8" y="8" width="112" height="112" rx="26" fill="url(#bgGrad)" filter="url(#shadow)"/>
+
+  <!-- Subtle Grid lines -->
+  <line x1="20" y1="44" x2="108" y2="44" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="20" y1="64" x2="108" y2="64" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.5"/>
+  <line x1="20" y1="84" x2="108" y2="84" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="44" y1="20" x2="44" y2="108" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="84" y1="20" x2="84" y2="108" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <!-- Dynamic ECG / Pulse Wave -->
+  <polyline points="20,64 42,64 52,36 64,92 76,50 86,64 108,64" 
+            fill="none" 
+            stroke="url(#pulseGrad)" 
+            stroke-width="5" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"/>
+
+  <!-- Peak Indicator Point -->
+  <circle cx="52" cy="36" r="4.5" fill="#ffffff"/>
+  <circle cx="52" cy="36" r="8" fill="#38bdf8" fill-opacity="0.4"/>
+</svg>
+
