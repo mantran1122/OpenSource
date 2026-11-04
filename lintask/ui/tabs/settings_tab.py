@@ -15,6 +15,7 @@ from qfluentwidgets import (
     ComboBox,
     PushButton,
     PrimaryPushButton,
+    SwitchButton,
     SmoothScrollArea,
     FluentIcon,
     IconWidget,
@@ -154,6 +155,21 @@ class SettingsTab(QWidget):
         )
         layout.addWidget(self.card_shortcut)
 
+        # Minimize to Tray Toggle
+        self.tray_switch = SwitchButton()
+        self.tray_switch.setChecked(True)
+        self.tray_switch.setOnText("Enabled")
+        self.tray_switch.setOffText("Disabled")
+        self.tray_switch.checkedChanged.connect(self._on_tray_toggle)
+
+        card_tray = _create_setting_card(
+            FluentIcon.SPEED_HIGH,
+            "Minimize to Taskbar Tray on Close",
+            "Keep LinTask monitoring system performance in the background when the window is closed.",
+            self.tray_switch,
+        )
+        layout.addWidget(card_tray)
+
         # ---------------- Section 4: About ----------------
         sec4_title = CaptionLabel("ABOUT & OPEN SOURCE")
         sec4_title.setStyleSheet("font-weight: bold; color: #71717a; font-size: 11px; letter-spacing: 0.5px;")
@@ -233,6 +249,10 @@ class SettingsTab(QWidget):
             else:
                 InfoBar.error("Error", msg, duration=3500, parent=self, position=InfoBarPosition.TOP_RIGHT)
         self._update_shortcut_btn()
+
+    def _on_tray_toggle(self, checked: bool):
+        if self.main_window:
+            self.main_window.minimize_to_tray = checked
 
     def _open_github(self):
         QDesktopServices.openUrl(QUrl("https://github.com/mantran1122/OpenSource"))
