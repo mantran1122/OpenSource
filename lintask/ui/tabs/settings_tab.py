@@ -235,5 +235,5 @@ class SettingsTab(QWidget):
         self._update_shortcut_btn()
 
     def _open_github(self):
-        QDesktopServices.openUrl(QUrl("https://github.com/your-username/LinTask-Manager"))
+        QDesktopServices.openUrl(QUrl("https://github.com/mantran1122/OpenSource"))
 

@@ -8,8 +8,8 @@ Cảm ơn bạn đã quan tâm và muốn đóng góp cho **LinTask Manager**! C
 
 1. **Fork và Clone repository**:
    ```bash
-   git clone https://github.com/<your-username>/LinTask-Manager.git
-   cd LinTask-Manager
+   git clone https://github.com/mantran1122/OpenSource.git
+   cd OpenSource
    ```
 
 2. **Khởi tạo môi trường ảo Python**:
@@ -56,3 +56,4 @@ Cảm ơn bạn đã quan tâm và muốn đóng góp cho **LinTask Manager**! C
    git push origin feature/ten-tinh-nang
    ```
 5. Mở **Pull Request** trên GitHub kèm theo mô tả ngắn gọn về những thay đổi bạn đã thực hiện!
+

@@ -79,8 +79,8 @@ Mở Terminal và chạy các lệnh sau:
 
 ```bash
 # 1. Clone mã nguồn từ GitHub
-git clone https://github.com/your-username/LinTask-Manager.git
-cd LinTask-Manager
+git clone https://github.com/mantran1122/OpenSource.git
+cd OpenSource
 
 # 2. Chạy script cài đặt tự động (tự tạo môi trường ảo và đăng ký menu ứng dụng)
 chmod +x install.sh
