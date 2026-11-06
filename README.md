@@ -73,16 +73,30 @@ Dự án ra đời nhằm giải quyết những hạn chế của các công c�
 
 ## 📥 Hướng dẫn cài đặt & Chạy (Installation)
 
-### Cách 1: Cài đặt tự động bằng Script (Khuyên dùng)
+### ⚡ Cài đặt nhanh 1 dòng lệnh (One-Liner Install)
 
-Mở Terminal và chạy các lệnh sau:
+Mở Terminal và dán lệnh sau để tự động tải, thiết lập môi trường ảo và tích hợp vào thanh tác vụ:
+
+```bash
+git clone https://github.com/mantran1122/OpenSource.git && cd OpenSource && chmod +x install.sh && ./install.sh
+```
+
+> [!TIP]
+> **Dành cho Ubuntu / Debian / Zorin OS / Linux Mint:** Nếu máy bạn chưa cài công cụ môi trường ảo Python, chỉ cần chạy lệnh này trước:
+> ```bash
+> sudo apt update && sudo apt install -y python3-venv python3-pip
+> ```
+
+---
+
+### Cách 1: Cài đặt tự động từng bước bằng Script
 
 ```bash
 # 1. Clone mã nguồn từ GitHub
 git clone https://github.com/mantran1122/OpenSource.git
 cd OpenSource
 
-# 2. Chạy script cài đặt tự động (tự tạo môi trường ảo và đăng ký menu ứng dụng)
+# 2. Cấp quyền và chạy cài đặt tự động (tự tạo môi trường ảo và tích hợp Taskbar)
 chmod +x install.sh
 ./install.sh
 
