@@ -12,7 +12,15 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, PROJECT_ROOT)
 
 lib_dir = os.path.join(PROJECT_ROOT, "lintask", "lib")
-venv_dir = os.path.join(PROJECT_ROOT, ".venv")
+
+# Location of virtualenv: in project root if writable, otherwise in user data dir
+if os.access(PROJECT_ROOT, os.W_OK):
+    venv_dir = os.path.join(PROJECT_ROOT, ".venv")
+else:
+    user_data_dir = os.path.expanduser("~/.local/share/lintask")
+    os.makedirs(user_data_dir, exist_ok=True)
+    venv_dir = os.path.join(user_data_dir, "venv")
+
 venv_python = os.path.join(venv_dir, "bin", "python3")
 requirements_file = os.path.join(PROJECT_ROOT, "requirements.txt")
 

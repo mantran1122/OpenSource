@@ -73,7 +73,23 @@ Dự án ra đời nhằm giải quyết những hạn chế của các công c�
 
 ## 📥 Hướng dẫn cài đặt & Chạy (Installation)
 
-### ⚡ Cài đặt nhanh 1 dòng lệnh (One-Liner Install)
+### 📦 Cách 1: Cài đặt bằng file `.deb` (Dễ nhất - Giống file .apk)
+
+Tải file gói cài đặt `lintask-manager_0.1.0_all.deb` từ mục [Releases trên GitHub](https://github.com/mantran1122/OpenSource/releases):
+- **Giao diện đồ họa (GUI):** Nhấp đúp chuột vào file `.deb` tải về và bấm nút **Install (Cài đặt)** trong cửa hàng phần mềm của máy (Software Store).
+- **Hoặc chạy lệnh Terminal:**
+  ```bash
+  sudo apt install ./lintask-manager_0.1.0_all.deb
+  ```
+- **Tự đóng gói file `.deb` từ mã nguồn:**
+  ```bash
+  chmod +x build_deb.sh
+  ./build_deb.sh
+  ```
+
+---
+
+### ⚡ Cách 2: Cài đặt nhanh 1 dòng lệnh từ Git (One-Liner Install)
 
 Mở Terminal và dán lệnh sau để tự động tải, thiết lập môi trường ảo và tích hợp vào thanh tác vụ:
 
