@@ -16,28 +16,16 @@ fi
 # 2. Make run script executable
 chmod +x run.py
 
-# 3. Setup Virtual Environment
+# 3. Setup Virtual Environment (User space - no root/password needed)
 if [ ! -d ".venv" ] || [ ! -f ".venv/bin/python3" ]; then
     echo "Creating virtual environment in .venv..."
     if ! python3 -m venv .venv 2>/dev/null; then
         echo ""
         echo "[!] Không thể tạo môi trường ảo Python (.venv)."
-        echo "[!] Hệ thống của bạn có thể đang thiếu gói 'python3-venv'."
-        echo ""
-        if command -v apt-get &> /dev/null; then
-            echo "-> Đang thử cài đặt python3-venv và python3-pip..."
-            if [ "$(id -u)" -eq 0 ]; then
-                apt-get update -q && apt-get install -y -q python3-venv python3-pip
-            elif command -v pkexec &> /dev/null; then
-                pkexec apt-get update -q && pkexec apt-get install -y -q python3-venv python3-pip
-            elif command -v sudo &> /dev/null; then
-                sudo apt-get update -q && sudo apt-get install -y -q python3-venv python3-pip
-            fi
-            python3 -m venv .venv
-        else
-            echo "Vui lòng cài đặt python3-venv / python3-pip cho hệ thống của bạn và chạy lại ./install.sh"
-            exit 1
-        fi
+        echo "[!] Trên Ubuntu / Debian / Zorin OS / Linux Mint, vui lòng chạy lệnh sau:"
+        echo "    sudo apt update && sudo apt install -y python3-venv python3-pip"
+        echo "Sau đó chạy lại: ./install.sh"
+        exit 1
     fi
 fi
 
@@ -47,21 +35,7 @@ source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# 5. Ensure Qt6 XCB Cursor Compatibility (for Ubuntu 24.04+ / Zorin OS 17+)
-if ! ldconfig -p 2>/dev/null | grep -q "libxcb-cursor.so.0"; then
-    if [ ! -f "lintask/lib/libxcb-cursor.so.0" ]; then
-        echo "Ensuring Qt6 X11 cursor compatibility..."
-        if command -v apt-get &> /dev/null && [ "$(id -u)" -eq 0 ]; then
-            apt-get install -y -q libxcb-cursor0 2>/dev/null || true
-        elif command -v pkexec &> /dev/null; then
-            pkexec apt-get install -y -q libxcb-cursor0 2>/dev/null || true
-        elif command -v sudo &> /dev/null; then
-            sudo apt-get install -y -q libxcb-cursor0 2>/dev/null || true
-        fi
-    fi
-fi
-
-# 6. Desktop and Taskbar Integration
+# 5. Desktop and Taskbar Integration (User space - no root/password needed)
 echo ""
 echo "Registering LinTask Manager to your Linux Application Menu & Taskbar..."
 python3 -c "from lintask.utils.desktop_integration import install_shortcut; success, msg = install_shortcut(); print('-> ' + msg)"

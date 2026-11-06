@@ -173,18 +173,13 @@ X-GNOME-Utilities-Folder=System
         except Exception:
             pass
 
-    # 3. Global /usr/local/bin wrapper (highest priority in GNOME Shell PATH)
+    # 3. Global /usr/local/bin wrapper (only if /usr/local/bin is writable, never prompt for root password)
     usr_local_wrapper = "/usr/local/bin/gnome-system-monitor"
     try:
-        # If writable directly
         if os.access("/usr/local/bin", os.W_OK):
             with open(usr_local_wrapper, "w", encoding="utf-8") as f:
                 f.write(wrapper_content)
             os.chmod(usr_local_wrapper, 0o755)
-        else:
-            # Try pkexec or passwordless sudo
-            script = f'cat << "EOF" > {usr_local_wrapper}\n{wrapper_content}EOF\nchmod +x {usr_local_wrapper}'
-            _run_cmd(["pkexec", "bash", "-c", script])
     except Exception:
         pass
 
@@ -208,11 +203,8 @@ def _remove_system_monitor_overrides():
 
     usr_local_wrapper = "/usr/local/bin/gnome-system-monitor"
     try:
-        if os.path.exists(usr_local_wrapper):
-            if os.access("/usr/local/bin", os.W_OK):
-                os.remove(usr_local_wrapper)
-            else:
-                _run_cmd(["pkexec", "rm", "-f", usr_local_wrapper])
+        if os.path.exists(usr_local_wrapper) and os.access("/usr/local/bin", os.W_OK):
+            os.remove(usr_local_wrapper)
     except Exception:
         pass
 

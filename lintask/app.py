@@ -3,7 +3,7 @@ import sys
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtGui import QFont
 from .ui.main_window import MainWindow
-from .utils.desktop_integration import install_shortcut
+from .utils.desktop_integration import is_shortcut_installed, install_shortcut
 
 
 def main():
@@ -17,8 +17,9 @@ def main():
     # This enables docks/taskbars to recognize the process and display its native icon.
     app.setDesktopFileName("lintask")
 
-    # Ensure desktop shortcut and taskbar integrations are active
-    install_shortcut()
+    # Auto-register desktop shortcut silently on first run if not already present
+    if not is_shortcut_installed():
+        install_shortcut()
 
     # Prevent quitting when window is minimized to system tray
     app.setQuitOnLastWindowClosed(False)
