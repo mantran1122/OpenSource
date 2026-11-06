@@ -17,9 +17,28 @@ fi
 chmod +x run.py
 
 # 3. Setup Virtual Environment
-if [ ! -d ".venv" ]; then
+if [ ! -d ".venv" ] || [ ! -f ".venv/bin/python3" ]; then
     echo "Creating virtual environment in .venv..."
-    python3 -m venv .venv
+    if ! python3 -m venv .venv 2>/dev/null; then
+        echo ""
+        echo "[!] Không thể tạo môi trường ảo Python (.venv)."
+        echo "[!] Hệ thống của bạn có thể đang thiếu gói 'python3-venv'."
+        echo ""
+        if command -v apt-get &> /dev/null; then
+            echo "-> Đang thử cài đặt python3-venv và python3-pip..."
+            if [ "$(id -u)" -eq 0 ]; then
+                apt-get update -q && apt-get install -y -q python3-venv python3-pip
+            elif command -v pkexec &> /dev/null; then
+                pkexec apt-get update -q && pkexec apt-get install -y -q python3-venv python3-pip
+            elif command -v sudo &> /dev/null; then
+                sudo apt-get update -q && sudo apt-get install -y -q python3-venv python3-pip
+            fi
+            python3 -m venv .venv
+        else
+            echo "Vui lòng cài đặt python3-venv / python3-pip cho hệ thống của bạn và chạy lại ./install.sh"
+            exit 1
+        fi
+    fi
 fi
 
 # 4. Install Requirements
@@ -36,6 +55,8 @@ if ! ldconfig -p 2>/dev/null | grep -q "libxcb-cursor.so.0"; then
             apt-get install -y -q libxcb-cursor0 2>/dev/null || true
         elif command -v pkexec &> /dev/null; then
             pkexec apt-get install -y -q libxcb-cursor0 2>/dev/null || true
+        elif command -v sudo &> /dev/null; then
+            sudo apt-get install -y -q libxcb-cursor0 2>/dev/null || true
         fi
     fi
 fi
